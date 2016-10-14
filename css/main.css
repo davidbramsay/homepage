@@ -1,3 +1,29 @@
+.Collage {
+    padding:5px;
+}
+.collageContainer {
+    padding:0px 0% 0px 0%;
+}
+.Collage img:hover{
+    opacity:0.9;
+}
+.Collage img{
+    border:solid 2px #dcdcdc;
+}
+
+.Collage a:link{
+    text-decoration: none;
+}
+.Collage a:visited{
+    text-decoration: none;
+}
+.Collage a:hover{
+    text-decoration: none;
+}
+.Collage a:active{
+    text-decoration: none;
+}
+
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code,
