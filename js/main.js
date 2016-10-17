@@ -8,12 +8,14 @@ $(document).ready(function() {
 	});
 
     $(window).on("load", function(){
+		$(".loading").fadeOut(200);
+		$(".collageContainer").fadeIn(3000);
                 collage();
     });
 });
 
 function collage(){
-        $('.Collage').removeWhitespace().collagePlus({'fadeSpeed' : 2000, 'targetHeight' : 250,
+        $('.Collage').removeWhitespace().collagePlus({'fadeSpeed' : 3000, 'targetHeight' : 250,
                                 'direction': 'vertical'});
 };
 
