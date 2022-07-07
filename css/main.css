@@ -100,7 +100,7 @@ dfn {
 }
 
 mark {
-  background: #ff0;
+  background: #f5f5f5;
   color: #000;
 }
 
@@ -244,8 +244,8 @@ body {
   font-feature-settings: "kern", "liga", "frac", "pnum";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  background-color: #22272a;
-  color: #ced9e0;
+  background-color: #f5f5f5;
+  color: #1d261f;
   font-family: "font-family: " Helvetica Neue ",Helvetica,Arial,sans-serif";
   font-size: 1em;
   line-height: 1.5;
@@ -260,7 +260,7 @@ h6 {
   font-family: "font-family: " Helvetica Neue ",Helvetica,Arial,sans-serif";
   line-height: 1.25;
   margin: 0;
-  color: #fff;
+  color: #0a6899;
 }
 
 h1 {
@@ -296,7 +296,7 @@ a {
   -webkit-transition: color 0.1s linear;
   -moz-transition: color 0.1s linear;
   transition: color 0.1s linear;
-  color: #ced9e0;
+  color: #5D707f;
   text-decoration: none;
 }
 a:hover {
@@ -352,7 +352,7 @@ a {
 }
 
 a:hover {
-  color: #ffcc00;
+  color: #0a6899;
 }
 
 header {
@@ -360,7 +360,7 @@ header {
   margin-left: auto;
   margin-right: auto;
   margin-top: 4em;
-  border-top: 2px solid #ffcc00;
+  border-top: 2px solid #0a6899;
   opacity: 0;
   -webkit-transform: translateY(50px);
   -moz-transform: translateY(50px);
@@ -413,12 +413,12 @@ header #logo-container #logo {
   float: none;
 }
 header #logo-container #subtitle {
-  color: #ffcc00;
+  color: #0a6899;
   font-weight: bold;
   font-size: 18px;
 }
 header a {
-  color: #ffcc00;
+  color: #0a6899;
   text-decoration: none;
   border: none;
 }
@@ -474,7 +474,7 @@ header nav ul li a.bordered {
   padding: 0.4em;
   padding-left: 0.8em;
   padding-right: 0.8em;
-  border: 2px solid #ffcc00;
+  border: 2px solid #0a6899;
 }
 
 #content {
@@ -559,7 +559,7 @@ header nav ul li a.bordered {
   text-transform: uppercase;
   font-size: 1.0em;
   font-weight: bold;
-  color: #ffcc00;
+  color: #0a6899;
   margin-bottom: 0.05em;
 }
 #content section.row p {
@@ -645,6 +645,10 @@ header nav ul li a.bordered {
 #content .photo-grid a.col-3 {
   width: 32%;
   width: calc(33.33333% - 16px);
+}
+#content .photo-grid a.col-6 {
+  width: 16%;
+  width: calc(16.66666% - 16px);
 }
 @media screen and (max-width: 540px) {
   #content .photo-grid a {
