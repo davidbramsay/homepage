@@ -6,6 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="shortcut icon" href="img/favicon.ico">
+    <!--<link href="https://vjs.zencdn.net/7.20.3/video-js.css"
+        rel="stylesheet" />-->
 
 	<!--<link rel="stylesheet" href="css/featherlight.min.css">-->
 	<!--<link rel="stylesheet" href="css/vendor/fluidbox.min.css">-->
@@ -14,41 +16,173 @@
 
 	<title>David B. Ramsay</title>
 
+<style>
+.dropdown-notification {
+   height: 100px;
+   width: 100%;
+   background-color: #234F75;
+   line-height: 40px;
+   position: fixed;
+   top: -250px;
+   transition: top 3s;
+   color: white;
+   text-align: center;
+}
+.dropdown-notification.active {
+   top: 0;
+}
+input {
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 0 15px 4px rgba(255,255,255,0.06);
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 </head>
-<body>
+<body style="padding-left:0em;padding-right:0em">
+        <div class="dropdown-notification text-center">
+            <div style="width:100%; height:100px;">
+                <div style="background-color:#234F75;display:inline-block;">
+                <img src="img/digital_thriving_news_banner_2.png" style="height:100px;float:left;"></img>
+                <div id="thanks" style="width:300px; height:100px;float:left;">
+                    <p style="margin-top:45px;">
+                        Thank you!
+                    </p>
+                </div>
+                <div id="emailform" style="width:300px;float:left;">
+                <input type="text" style="height:35px; width:100%; margin-top:10px;class="email" id="emailinput" placeholder="enter email here"/>
+                <button id="subbutton" style="height:30px;width:100%;margin-top:10px;">Subscribe now!</button>
+                </div>
+                <div style="position:relative;float:right;margin:30px;margin-top:5px;">
+                    <button class="close">X</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
-
-<!--	<header>
-
-		<div id="logo-container">
-			<div id="logo"><a href="/">David  B  Ramsay</a></div>
-			<div id="subtitle">MIT Media-labber, Fulbrighter, Musician, and Engineer</div>
-		</div>
-		<nav>
-			<ul>
-				<li><a href="http://dramsay.scripts.mit.edu/wordpress/">past work</a></li>
-				<li><a href="public/RamsayResume2017.pdf">resume</a></li>
-				<li><a href="https://www.couragenthebear.com">music</a></li>
-				<li><a href="mailto:dramsay@mit.edu" class="bordered">contact</a></li>
-			</ul>
-		</nav>
-
-	</header>
--->
 	<div id="content">
 
+
 		<section class="intro">
-					<p style="padding-top:25px">
-					<img style="float:left; margin-right:25px;" width=30% src="img/rev_22/ramsay_main_headshot.jpg"/>
-					<p style='margin-top:25px; text-align:justify'><span style="color:#0a6899;font-size:1.3em;font-weight:bold;padding-right:15px ">David Ramsay</span> <span style="font-weight:bold;font-size:.6em">is a PhD student at the MIT Media Lab in the Responsive Environments group, where he studies how the design of our tools alter the dynamics of our daily attention. He combines high-quality hardware systems with cutting edge statistical modeling to measure, understand, and improve human experience.</span>
-						<br><br>
-						<span style="font-size:0.4em; line-height:1em;color:#374439">
-					David is a Fulbright-winning researcher who spent three years as an audio systems engineer in Bose Research before joining MIT.  At the Media Lab he's spent two summers in Shenzhen, China improving his hardware design and manufacturing skills under the supervision of Andrew 'bunnie' Huang, and published his work on 'edge' deep learning models completed at Google AI in Zurich.  
-					David created and taught MIT's first for-credit class focused on psychology's replication crisis, for which he was selected as his department's nominee for MIT's Goodwin Teaching Award.  He was a lead TA and lecturer in Roz Picard's 'AI and Mental Health' class among others.  David's work appears in 14 peer-reviewed publications, 2 patents, has been discussed on NPR and exhibited at the MIT Museum.  
-					</span>
+					<p style='align:center; text-align:left'><span style="color:#0a6899;font-size:1.3em;font-weight:bold;padding-right:15px ">
+                        <br>
+                        East Campus Living Lab</span>
+					
+
+                    <!--
+                    <div class="col" style='display:flex; justify-content:center'>
+                    <video style='text-align:center' id=example-video width=600 height=300 class="video-js vjs-default-skin" controls> </video>
+                    </div>
+                    -->
+
+                    <div style='text-align:center' id="twitch-embed"></div>
+
 					</p>
-					</p>
+
+
 		</section>
+
+<section class="row" style="align:center;display:flex;justify-content:center;padding-top:0;padding-bottom:0">
+
+    <button onclick="sendMessage('normal')">Normal</button>
+    <button onclick="sendMessage('cozy')">Cozy</button>
+    <button onclick="sendMessage('vibes')">Vibes</button>
+    <br><br>
+</section>
+    <br>
+<section class="row" style="align:center;display:flex;justify-content:center;padding-top:0;padding-bottom:0">
+    <button onclick="sendMessage('door')">Guitar Door</button>
+    <button onclick="sendMessage('middle')">Guitar Middle</button>
+    <button onclick="sendMessage('chair')">Guitar Chair</button>
+    <br><br>
+</section>
+    <br><br>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <script>
+
+       $(document).ready(function() {
+
+        $("body").addClass("loaded");
+
+
+        $('#thanks').hide();
+        //dialog for email signups
+        $('#subbutton').click(function(){
+            var add = $("#emailinput").val();
+            $('#emailform').hide();
+            $('#thanks').show();
+            setTimeout(()=>{
+                $('.dropdown-notification').removeClass('active');
+            },1000);
+                $.post('sendemail', {email: add});
+        });
+
+        $('#emailinput').keypress(function (e) {
+        if (e.which == 13) {
+            var add = $("#emailinput").val();
+            $('#emailform').hide();
+            $('#thanks').show();
+            setTimeout(()=>{
+                $('.dropdown-notification').removeClass('active');
+            },1000);
+            $.post('sendemail', {email: add});
+            return false;    //<---- Add this line
+        }
+        });
+
+        if ($.cookie("noti") !== "closed") { // or you could just check for cookie existing
+                setTimeout(()=>{
+                    $('.dropdown-notification').addClass('active');
+                },7000);
+        }
+
+        // On button click close and add cookie (expires in 100 days)
+        $('.close').on('click', function(){
+            $.cookie("noti", "closed", { expires : 100 });
+            $('.dropdown-notification').removeClass('active');
+        })
+      });
+
+      var embed = new Twitch.Embed("twitch-embed", {
+        width: 854,
+        height: 480,
+        channel: "dramsay9",
+        layout: "video",
+        autoplay: false,
+        // Only needed if this page is going to be embedded on other websites
+        parent: ["eastcampus.davidbramsay.com"]
+      });
+
+      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+        var player = embed.getPlayer();
+        player.play();
+      });
+
+
+      let socket = new WebSocket("ws://eastcampus.davidbramsay.com:8020");
+
+      socket.onopen = function () {
+        setInterval(ping, 30000);
+      }
+
+      function ping() {
+        console.log('ping');
+        socket.send('__ping__');
+        tm = setTimeout(function () {
+        }, 5000);
+      }
+
+
+      function sendMessage(message){
+        socket.send(message);
+        return false;
+      };
+    </script>
+
+
 
 <section class="row" style="padding-top:0;padding-bottom:0">
 			<h2>Wearables<span style='font-weight:bold;font-size:.8em;color:#374439'> that measure your focus</span></h2>
@@ -76,7 +210,7 @@
 
 <section class="row">
 	<h2>Interventions<span style='font-weight:bold;font-size:.8em;color:#374439'> that alter your engagement</span></h2>
-    <div class="col">	  
+    <div class="col">
 	<section class="row" style="height:100px;vertical-align:center;padding-top:0;text-align:right">
 		<a href="/emailed">
 		Email Device
@@ -98,18 +232,8 @@
     </div>
     <div class="col" style="padding-top:0;margin-top:0;border-top-style:none">
 	     <video width="480" height="320" autoplay loop muted playsinline preload><source src="img/2022/guitar_moving_2.mp4" type="video/mp4"></video>
-    </div>	
+    </div>
 </section>
-<section class="row">
-
-				<p style="font-size:1.6em; line-height:1.8em;float:right;text-align:right;font-weight:bold"><br>
-				<a href="/publications">publications and patents</a><br>
-				<a href="https://blog.davidbramsay.com">blog</a><br>
-				<a href="https://www.couragenthebear.com">music</a><br>
-				<a href="public/RamsayResume2020.pdf">resume</a><br>
-				</p>
-
-		</section>
 
 		<section class="row">
 			<div class="col">
@@ -130,31 +254,42 @@
 
 	</div>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script>
 	if (!window.jQuery)
 	{
 	    document.write('<script src="js/vendor/jquery.1.11.min.js"><\/script>');
 	}
-	</script>
+    </script>-->
+    <script src="/js/jquery.cookie.js"></script>
 
 	<script src="js/vendor/jquery.fluidbox.min.js"></script>
-	<!--<script src="js/jquery.removeWhitespace.min.js"></script>-->
+    <!--<script src="js/jquery.removeWhitespace.min.js"></script>-->
+
 	<!--<script src="js/jquery.collagePlus.min.js"></script>-->
 	<!--<script src="js/featherlight.min.js"></script>-->
-	<script src="js/main.js"></script>
+    <!--<script src="js/main.js"></script>-->
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-U  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 	  ga('create', 'UA-88683773-1', 'auto');
 	  ga('send', 'pageview');
 
 	</script>
-
+    <!--
+    <script src="js/video.js"></script>
+    <script src="js/dash.all.js"></script>
+    <script src="js/videojs-dash.min.js"></script>
+    <script>
+    var player = videojs('example-video');
+    player.src({ src: 'http://eastcampus.davidbramsay.com:8088/dash/obs_stream.mpd', type: 'application/dash+xml'});
+    player.play();
+    </script>
+    -->
 </body>
 </html>
 

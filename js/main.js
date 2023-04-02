@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
 	$("body").addClass("loaded");
-
+/*
 	$(function () {
 		$('a[rel="lightbox"]').fluidbox();
 	});
@@ -12,8 +12,10 @@ $(document).ready(function() {
 		$(".collageContainer").fadeIn(3000);
                 collage();
     });
+    */
 });
 
+/*
 function collage(){
         $('.Collage').removeWhitespace().collagePlus({'fadeSpeed' : 3000, 'targetHeight' : 250,
                                 'direction': 'vertical'});
@@ -28,3 +30,4 @@ $(window).bind('resize', function() {
     if (resizeTimer) clearTimeout(resizeTimer);
     resizeTimer = setTimeout(collage, 200);
 });
+*/
