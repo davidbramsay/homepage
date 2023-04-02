@@ -14,8 +14,51 @@
 
 	<title>David B. Ramsay</title>
 
+<style>
+.dropdown-notification {
+   height: 100px;
+   width: 100%;
+   background-color: #234F75;
+   line-height: 40px;
+   position: fixed;
+   top: -250px;
+   transition: top 3s;
+   color: white;
+   text-align: center;
+}
+.dropdown-notification.active {
+   top: 0;
+}
+input {
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 0 15px 4px rgba(255,255,255,0.06);
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+
 </head>
-<body>
+<body style="padding-left:0em;padding-right:0em">
+        <div class="dropdown-notification text-center">
+            <div style="width:100%; height:100px;">
+                <div style="background-color:#234F75;display:inline-block;">
+                <img src="img/digital_thriving_news_banner_2.png" style="max-height:100px;float:left;"></img>
+                <div id="thanks" style="width:300px; height:100px;float:left;">
+                    <p style="margin-top:45px;">
+                        Thank you!
+                    </p>
+                </div>
+                <div id="emailform" style="width:300px;float:left;">
+                <input type="text" style="height:35px; width:100%; margin-top:10px;class="email" id="emailinput" placeholder="enter email here"/>
+                <button id="subbutton" style="height:30px;width:100%;margin-top:10px;">Subscribe now!</button>
+                </div>
+                <div style="position:relative;float:right;margin:30px;margin-top:5px;">
+                    <button class="close">X</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
 
 <!--	<header>
@@ -130,13 +173,51 @@
 
 	</div>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script>
-	if (!window.jQuery)
-	{
-	    document.write('<script src="js/vendor/jquery.1.11.min.js"><\/script>');
-	}
-	</script>
+	 <script>
+
+       $(document).ready(function() {
+
+        $("body").addClass("loaded");
+
+
+        $('#thanks').hide();
+        //dialog for email signups
+        $('#subbutton').click(function(){
+            var add = $("#emailinput").val();
+            $('#emailform').hide();
+            $('#thanks').show();
+            setTimeout(()=>{
+                $('.dropdown-notification').removeClass('active');
+            },1000);
+            $.post('https://eastcampus.davidbramsay.com/sendemail', {email: add});
+        });
+
+        $('#emailinput').keypress(function (e) {
+        if (e.which == 13) {
+            var add = $("#emailinput").val();
+            $('#emailform').hide();
+            $('#thanks').show();
+            setTimeout(()=>{
+                $('.dropdown-notification').removeClass('active');
+            },1000);
+            $.post('https://eastcampus.davidbramsay.com/sendemail', {email: add});
+            return false;    //<---- Add this line
+        }
+        });
+
+        if ($.cookie("noti") !== "closed") { // or you could just check for cookie existing
+                setTimeout(()=>{
+                    $('.dropdown-notification').addClass('active');
+                },7000);
+        }
+
+        // On button click close and add cookie (expires in 100 days)
+        $('.close').on('click', function(){
+            $.cookie("noti", "closed", { expires : 100 });
+            $('.dropdown-notification').removeClass('active');
+        })
+      });
+</script>
 
 	<script src="js/vendor/jquery.fluidbox.min.js"></script>
 	<!--<script src="js/jquery.removeWhitespace.min.js"></script>-->
@@ -148,7 +229,7 @@
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-U  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 	  ga('create', 'UA-88683773-1', 'auto');
 	  ga('send', 'pageview');
