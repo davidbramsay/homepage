@@ -90,6 +90,15 @@ input {
   width: 100%;
 }
 
+#padchange {
+  padding: 50px;
+}
+@media (max-width: 768px) {
+    #padchange {
+	padding: 0px !important;
+    }
+}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -188,6 +197,16 @@ input {
                     </p>
                     <div style='width:100%' id="twitch-embed"></div>
                     <br><br>
+
+					<p style='align:left; width:100%;padding-top:30px;text-align:left;background-color:rgb(0,0,0,.7)'>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-weight:bold;font-size:2em;color:#2592cf">
+                       An Intro to East Campus:
+                    </span>
+                    </p>
+                    <div style="position:relative; width:100%; height:0px; padding-bottom:56.25%;">
+                    <iframe style="position:absolute; left:0; top:0; width:100%; height:100%" src="https://www.youtube.com/embed/4qYnkwyabAQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <br><br>
 					<p style='align:left; width:100%;padding-top:10px;text-align:left;background-color:rgb(0,0,0,.7)'>
                     <span style="font-family: 'DIN Condensed', sans-serif;font-size:0.8em;color:#0073b5">
                         More information about some of the specific wearables and interventions David has designed and lived with
@@ -205,7 +224,7 @@ input {
 
 
 
-<section class="row" style="padding:50px;padding-top:10;padding-bottom:0;background-color:#f3f3f3">
+<section class="row padchange" style="padding-top:10;padding-bottom:0;background-color:#f3f3f3">
 			<h2>Wearables<span style='font-weight:bold;font-size:.8em;color:#374439'> that measure your focus</span></h2>
     <div class="col">	  
 	     <video width="480" height="320" autoplay loop muted playsinline preload><source src="img/2022/standing_wearables_2.mp4" type="video/mp4"></video>
@@ -229,7 +248,7 @@ input {
     </div>
 </section>
 
-<section class="row" style="padding:50px;background-color:#f3f3f3">
+<section class="row padchange" style="background-color:#f3f3f3">
 	<h2>Interventions<span style='font-weight:bold;font-size:.8em;color:#374439'> that alter your engagement</span></h2>
     <div class="col">
 	<section class="row" style="height:100px;vertical-align:center;padding-top:0;text-align:right">
@@ -256,7 +275,7 @@ input {
     </div>
 </section>
 
-<section class="row" style="padding:50px;padding-bottom:0px;background-color:#f3f3f3">
+<section class="row padchange" style="padding-bottom:0px;background-color:#f3f3f3">
 			<div class="col">
 				<h2>Contact Me</h2>
 				<p>
