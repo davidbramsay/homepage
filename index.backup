@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" href="img/favicon.ico">
+    <!--<link href="https://vjs.zencdn.net/7.20.3/video-js.css"
+        rel="stylesheet" />-->
+
+	<!--<link rel="stylesheet" href="css/featherlight.min.css">-->
+	<!--<link rel="stylesheet" href="css/vendor/fluidbox.min.css">-->
+	<link rel="stylesheet" href="css/main.css">
+	<!--<link rel="stylesheet" href="css/transitions.css">-->
+
+	<title>David B. Ramsay</title>
+
+<style>
+.dropdown-notification {
+   height: 100px;
+   width: 100%;
+   background-color: #234F75;
+   line-height: 40px;
+   position: fixed;
+   top: -250px;
+   transition: top 3s;
+   color: white;
+   text-align: center;
+}
+.dropdown-notification.active {
+   top: 0;
+}
+input {
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 0 15px 4px rgba(255,255,255,0.06);
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+</head>
+<body style="padding-left:0em;padding-right:0em">
+        <div class="dropdown-notification text-center">
+            <div style="width:100%; height:100px;">
+                <div style="background-color:#234F75;display:inline-block;">
+                <img src="img/digital_thriving_news_banner_2.png" style="max-height:100px;float:left;"></img>
+                <div id="thanks" style="width:300px; height:100px;float:left;">
+                    <p style="margin-top:45px;">
+                        Thank you!
+                    </p>
+                </div>
+                <div id="emailform" style="width:300px;float:left;">
+                <input type="text" style="height:35px; width:100%; margin-top:10px;class="email" id="emailinput" placeholder="enter email here"/>
+                <button id="subbutton" style="height:30px;width:100%;margin-top:10px;">Subscribe now!</button>
+                </div>
+                <div style="position:relative;float:right;margin:30px;margin-top:5px;">
+                    <button class="close">X</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+	<div id="content">
+
+
+		<section class="intro">
+					<p style='align:center; text-align:left'><span style="color:#0a6899;font-size:1.3em;font-weight:bold;padding-right:15px ">
+                        <br>
+                        East Campus Living Lab</span>
+					
+
+                    <!--
+                    <div class="col" style='display:flex; justify-content:center'>
+                    <video style='text-align:center' id=example-video width=600 height=300 class="video-js vjs-default-skin" controls> </video>
+                    </div>
+                    -->
+
+                    <div style='text-align:center' id="twitch-embed"></div>
+
+					</p>
+
+
+		</section>
+
+<section class="row" style="align:center;display:flex;justify-content:center;padding-top:0;padding-bottom:0">
+
+    <button onclick="sendMessage('normal')">Normal</button>
+    <button onclick="sendMessage('cozy')">Cozy</button>
+    <button onclick="sendMessage('vibes')">Vibes</button>
+    <br><br>
+</section>
+    <br>
+<section class="row" style="align:center;display:flex;justify-content:center;padding-top:0;padding-bottom:0">
+    <button onclick="sendMessage('door')">Guitar Door</button>
+    <button onclick="sendMessage('middle')">Guitar Middle</button>
+    <button onclick="sendMessage('chair')">Guitar Chair</button>
+    <br><br>
+</section>
+    <br><br>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <script>
+
+       $(document).ready(function() {
+
+        $("body").addClass("loaded");
+
+
+        $('#thanks').hide();
+        //dialog for email signups
+        $('#subbutton').click(function(){
+            var add = $("#emailinput").val();
+            $('#emailform').hide();
+            $('#thanks').show();
+            setTimeout(()=>{
+                $('.dropdown-notification').removeClass('active');
+            },1000);
+                $.post('sendemail', {email: add});
+        });
+
+        $('#emailinput').keypress(function (e) {
+        if (e.which == 13) {
+            var add = $("#emailinput").val();
+            $('#emailform').hide();
+            $('#thanks').show();
+            setTimeout(()=>{
+                $('.dropdown-notification').removeClass('active');
+            },1000);
+            $.post('sendemail', {email: add});
+            return false;    //<---- Add this line
+        }
+        });
+
+        if ($.cookie("noti") !== "closed") { // or you could just check for cookie existing
+                setTimeout(()=>{
+                    $('.dropdown-notification').addClass('active');
+                },7000);
+        }
+
+        // On button click close and add cookie (expires in 100 days)
+        $('.close').on('click', function(){
+            $.cookie("noti", "closed", { expires : 100 });
+            $('.dropdown-notification').removeClass('active');
+        })
+      });
+
+      var embed = new Twitch.Embed("twitch-embed", {
+        width: 854,
+        height: 480,
+        channel: "dramsay9",
+        layout: "video",
+        autoplay: false,
+        // Only needed if this page is going to be embedded on other websites
+        parent: ["eastcampus.davidbramsay.com"]
+      });
+
+      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+        var player = embed.getPlayer();
+        player.play();
+      });
+
+
+      let socket = new WebSocket("ws://eastcampus.davidbramsay.com:8020");
+
+      socket.onopen = function () {
+        setInterval(ping, 30000);
+      }
+
+      function ping() {
+        console.log('ping');
+        socket.send('__ping__');
+        tm = setTimeout(function () {
+        }, 5000);
+      }
+
+
+      function sendMessage(message){
+        socket.send(message);
+        return false;
+      };
+    </script>
+
+
+
+<section class="row" style="padding-top:0;padding-bottom:0">
+			<h2>Wearables<span style='font-weight:bold;font-size:.8em;color:#374439'> that measure your focus</span></h2>
+    <div class="col">	  
+	     <video width="480" height="320" autoplay loop muted playsinline preload><source src="img/2022/standing_wearables_2.mp4" type="video/mp4"></video>
+    </div>	
+    <div class="col" style="padding-top:0;margin-top:0;border-top-style:none">
+	<section class="row" style="height:100px;vertical-align:center;padding-top:0">
+		<a href="/captivates">
+		<img src="img/2022/wearable_glasses.jpg" style="max-height:90px"></img> Captivates Smartglasses
+		</a>
+	</section>
+	<section class="row" style="height:100px;padding-top:15px">
+		<a href="/equinox">
+			<img src="img/2022/wearable_watch.jpg" style="max-height:90px"></img> Equinox Smartwatch
+		</a>
+	</section>
+	<section class="row" style="height:100px;padding-top:30px">
+		<a href="/feather">
+		    <img src="img/2022/wearable_legstrap.jpg" style="max-height:90px"></img> Feather Leg Strap
+		</a>
+	</section>
+    </div>
+</section>
+
+<section class="row">
+	<h2>Interventions<span style='font-weight:bold;font-size:.8em;color:#374439'> that alter your engagement</span></h2>
+    <div class="col">
+	<section class="row" style="height:100px;vertical-align:center;padding-top:0;text-align:right">
+		<a href="/emailed">
+		Email Device
+		<img src="img/2022/intervention_email.jpg" style="max-height:90px"></img>
+		</a>
+	</section>
+	<section class="row" style="height:100px;padding-top:15px;text-align:right">
+		<a href="/huxley">
+			Huxley E-book
+			<img src="img/2022/intervention_huxley.jpg" style="max-height:90px"></img>
+		</a>
+	</section>
+	<section class="row" style="height:100px;padding-top:30px;text-align:right">
+		<a href="/stagehand">
+			Stagehand Controller
+		    <img src="img/2022/intervention_stagehand.jpg" style="max-height:90px"></img>
+		</a>
+	</section>
+    </div>
+    <div class="col" style="padding-top:0;margin-top:0;border-top-style:none">
+	     <video width="480" height="320" autoplay loop muted playsinline preload><source src="img/2022/guitar_moving_2.mp4" type="video/mp4"></video>
+    </div>
+</section>
+
+		<section class="row">
+			<div class="col">
+				<h2>Contact Me</h2>
+				<p>
+					via <a href="mailto:dramsay@mit.edu">email</a> or add me on <a href="https://www.linkedin.com/in/dramsay2">linkedin</a>.
+				</p>
+			</div>
+			<div class="col">
+				<h2>Follow me</h2>
+				<p>
+				on	<a href="https://github.com/dramsay9">github</a>, <a href="https://twitter.com/davidbramsay">twitter</a>,  <a href="https://www.facebook.com/dramsay2">facebook</a>, and <a href="https://instagram.com/ramsay.david/">instagram</a>.
+				</p>
+			</div>
+		</section>
+
+
+
+	</div>
+
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script>
+	if (!window.jQuery)
+	{
+	    document.write('<script src="js/vendor/jquery.1.11.min.js"><\/script>');
+	}
+    </script>-->
+    <script src="/js/jquery.cookie.js"></script>
+
+	<script src="js/vendor/jquery.fluidbox.min.js"></script>
+    <!--<script src="js/jquery.removeWhitespace.min.js"></script>-->
+
+	<!--<script src="js/jquery.collagePlus.min.js"></script>-->
+	<!--<script src="js/featherlight.min.js"></script>-->
+    <!--<script src="js/main.js"></script>-->
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-88683773-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+    <!--
+    <script src="js/video.js"></script>
+    <script src="js/dash.all.js"></script>
+    <script src="js/videojs-dash.min.js"></script>
+    <script>
+    var player = videojs('example-video');
+    player.src({ src: 'http://eastcampus.davidbramsay.com:8088/dash/obs_stream.mpd', type: 'application/dash+xml'});
+    player.play();
+    </script>
+    -->
+</body>
+</html>
+

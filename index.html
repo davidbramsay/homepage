@@ -36,10 +36,74 @@ input {
   border-radius:10px;
   box-shadow:0 0 15px 4px rgba(255,255,255,0.06);
 }
+
+#background-video {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    border: 5px solid #000;
+    width: 400px;
+    z-index: 2;
+    display: none;
+}
+.background {
+    position: fixed;
+    z-index: -10;
+}
+#background-canvas {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+    background: #000000;
+  background-size: cover;
+}
+
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: -9; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#twitch-embed {
+  height: 0;
+  position: relative;
+  overflow: hidden;
+  padding: 0 0 56.25%;
+  width: 100%;
+  border-radius: 8px;
+}
+
+#twitch-embed iframe {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<link href="https://fonts.cdnfonts.com/css/din-condensed" rel="stylesheet">
 </head>
+
+<div class="background">
+<video controls="false" playsinline="true" id="background-video" loop="loop" muted="true" preload="auto">
+  <source src="img/example_activities.mp4" type="video/mp4"></source>
+</video>
+  <div id="overlay"></div>
+  <canvas id="background-canvas"></canvas>
+</div>
+
 <body style="padding-left:0em;padding-right:0em">
         <div class="dropdown-notification text-center">
             <div style="width:100%; height:100px;">
@@ -61,130 +125,87 @@ input {
             </div>
         </div>
 
+					<p style='align:right; width:100%;text-align:right;margin-top:45%'>
+                    <img src="img/title2.png"></img>
+                    </p>
+					
+
 	<div id="content">
 
 
-		<section class="intro">
-					<p style='align:center; text-align:left'><span style="color:#0a6899;font-size:1.3em;font-weight:bold;padding-right:15px ">
-                        <br>
-                        East Campus Living Lab</span>
-					
+		<section class="intro" style="margin-bottom:0">
+            <br><br>
+					<p style='align:center; text-align:center;margin-top:5%'>
+                    <br> <br> <br>
+                    <img src="img/tag_question2.png"></img>
+                    <br> <br> <br>
+                    <img src="img/description2.png"></img>
 
-                    <!--
-                    <div class="col" style='display:flex; justify-content:center'>
-                    <video style='text-align:center' id=example-video width=600 height=300 class="video-js vjs-default-skin" controls> </video>
-                    </div>
-                    -->
+                    <video style="width:86%"  controls="true" muted="false" preload="auto">
+                    <source src="img/Twitch_Trailer_720p.mp4" type="video/mp4"></source>
+                    </video>
 
-                    <div style='text-align:center' id="twitch-embed"></div>
+					<p style='align:left; width:100%;padding-top:30px;text-align:left;background-color:rgb(0,0,0,.7)'>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-weight:bold;font-size:2em;color:#2592cf">
+                       How do we measure depth of focus?
+                    </span>
+                    <br><br>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-size:0.8em;color:#0073b5">
+                    The depth of engagement in your tasks is difficult to measure.  To unobtrusively estimate David' focus
+                    state as he goes through his life, we are collecting a wide variety of data to understand the impact
+                    of giving up his smartphone.  The first set of these are physiological and behaviorial cues captured
+                    from wearables-- things like heart rate and skin conductance and stillness.  How quickly David notices a
+                    periperhal cue and how well he estimates time passing are other cues we're using to estimate his depth of focus:
+                    </span>
+                    </p>
+
+                    <img src="img/explain_dash.png"></img>
+                    <br>
+					<p style='align:left; width:100%;padding-top:30px;text-align:left;background-color:rgb(0,0,0,.7)'>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-size:0.8em;color:#0073b5">
+                    Of course, physiological data isn't enough on its own.  We combine the physiological and behavioral cues with
+                    surveys and self-report from David, asking questions about how focused, alert, and emotional he is.  We also
+                    look at objective patterns of interruption and task switching when it comes to his communication.  Viewers on
+                    Twitch can contribute their observations as well!
+                    </span>
+                    </p>
+                    <img src="img/explain_survey.png"></img>
+                    <br>
+					<p style='align:left; width:100%;padding-top:30px;text-align:left;background-color:rgb(0,0,0,.7)'>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-size:0.8em;color:#0073b5">
+                    Finally, we're also capturing a large host of video data.  People in focused modes tend to lack self-awareness,
+                    and this can be correlated with a blank look or repetitive, unconscious movement.  Video will help identify
+                    these facial expressions, body positioning, distractions in the environment, and task structure.
+                    </span>
+                    </p>
+                    <img src="img/explain_face.png"></img>
+                    <br>
+                    <br><br>
+					<p style='align:left; width:100%;padding-top:30px;text-align:left;background-color:rgb(0,0,0,.7)'>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-weight:bold;font-size:2em;color:#2592cf">
+                       Twitch Stream:
+                    </span>
+                    </p>
+                    <div style='width:100%' id="twitch-embed"></div>
+                    <br><br>
+					<p style='align:left; width:100%;padding-top:10px;text-align:left;background-color:rgb(0,0,0,.7)'>
+                    <span style="font-family: 'DIN Condensed', sans-serif;font-size:0.8em;color:#0073b5">
+                        More information about some of the specific wearables and interventions David has designed and lived with
+                        in the famous East Campus hacker dorm at MIT is included below:
+                    </span>
+                    </p>
 
 					</p>
 
 
 		</section>
 
-<section class="row" style="align:center;display:flex;justify-content:center;padding-top:0;padding-bottom:0">
-
-    <button onclick="sendMessage('normal')">Normal</button>
-    <button onclick="sendMessage('cozy')">Cozy</button>
-    <button onclick="sendMessage('vibes')">Vibes</button>
-    <br><br>
-</section>
-    <br>
-<section class="row" style="align:center;display:flex;justify-content:center;padding-top:0;padding-bottom:0">
-    <button onclick="sendMessage('door')">Guitar Door</button>
-    <button onclick="sendMessage('middle')">Guitar Middle</button>
-    <button onclick="sendMessage('chair')">Guitar Chair</button>
-    <br><br>
-</section>
-    <br><br>
 
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
 
-    <script>
-
-       $(document).ready(function() {
-
-        $("body").addClass("loaded");
 
 
-        $('#thanks').hide();
-        //dialog for email signups
-        $('#subbutton').click(function(){
-            var add = $("#emailinput").val();
-            $('#emailform').hide();
-            $('#thanks').show();
-            setTimeout(()=>{
-                $('.dropdown-notification').removeClass('active');
-            },1000);
-                $.post('sendemail', {email: add});
-        });
-
-        $('#emailinput').keypress(function (e) {
-        if (e.which == 13) {
-            var add = $("#emailinput").val();
-            $('#emailform').hide();
-            $('#thanks').show();
-            setTimeout(()=>{
-                $('.dropdown-notification').removeClass('active');
-            },1000);
-            $.post('sendemail', {email: add});
-            return false;    //<---- Add this line
-        }
-        });
-
-        if ($.cookie("noti") !== "closed") { // or you could just check for cookie existing
-                setTimeout(()=>{
-                    $('.dropdown-notification').addClass('active');
-                },7000);
-        }
-
-        // On button click close and add cookie (expires in 100 days)
-        $('.close').on('click', function(){
-            $.cookie("noti", "closed", { expires : 100 });
-            $('.dropdown-notification').removeClass('active');
-        })
-      });
-
-      var embed = new Twitch.Embed("twitch-embed", {
-        width: 854,
-        height: 480,
-        channel: "dramsay9",
-        layout: "video",
-        autoplay: false,
-        // Only needed if this page is going to be embedded on other websites
-        parent: ["eastcampus.davidbramsay.com"]
-      });
-
-      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
-        var player = embed.getPlayer();
-        player.play();
-      });
-
-
-      let socket = new WebSocket("ws://eastcampus.davidbramsay.com:8020");
-
-      socket.onopen = function () {
-        setInterval(ping, 30000);
-      }
-
-      function ping() {
-        console.log('ping');
-        socket.send('__ping__');
-        tm = setTimeout(function () {
-        }, 5000);
-      }
-
-
-      function sendMessage(message){
-        socket.send(message);
-        return false;
-      };
-    </script>
-
-
-
-<section class="row" style="padding-top:0;padding-bottom:0">
+<section class="row" style="padding:50px;padding-top:10;padding-bottom:0;background-color:#f3f3f3">
 			<h2>Wearables<span style='font-weight:bold;font-size:.8em;color:#374439'> that measure your focus</span></h2>
     <div class="col">	  
 	     <video width="480" height="320" autoplay loop muted playsinline preload><source src="img/2022/standing_wearables_2.mp4" type="video/mp4"></video>
@@ -208,7 +229,7 @@ input {
     </div>
 </section>
 
-<section class="row">
+<section class="row" style="padding:50px;background-color:#f3f3f3">
 	<h2>Interventions<span style='font-weight:bold;font-size:.8em;color:#374439'> that alter your engagement</span></h2>
     <div class="col">
 	<section class="row" style="height:100px;vertical-align:center;padding-top:0;text-align:right">
@@ -235,7 +256,7 @@ input {
     </div>
 </section>
 
-		<section class="row">
+<section class="row" style="padding:50px;padding-bottom:0px;background-color:#f3f3f3">
 			<div class="col">
 				<h2>Contact Me</h2>
 				<p>
@@ -247,7 +268,9 @@ input {
 				<p>
 				on	<a href="https://github.com/dramsay9">github</a>, <a href="https://twitter.com/davidbramsay">twitter</a>,  <a href="https://www.facebook.com/dramsay2">facebook</a>, and <a href="https://instagram.com/ramsay.david/">instagram</a>.
 				</p>
+            <p style="text-align:right;width:100%;font-size:0.5em"> &#169; David Ramsay 2023.</p>
 			</div>
+
 		</section>
 
 
@@ -268,7 +291,7 @@ input {
 
 	<!--<script src="js/jquery.collagePlus.min.js"></script>-->
 	<!--<script src="js/featherlight.min.js"></script>-->
-    <!--<script src="js/main.js"></script>-->
+    <script src="js/main.js"></script>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -291,5 +314,9 @@ input {
     </script>
     -->
 </body>
+
+
+
+
 </html>
 
